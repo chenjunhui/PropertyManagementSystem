@@ -21,11 +21,11 @@ public class OperationLogController {
             @RequestParam(required = false) String module,
             @RequestParam(required = false) String operator) {
         if (module != null && !module.isEmpty()) {
-            return Result.success(logService.listByModule(module, PageRequest.of(page, size)));
+            return Result.ok(logService.listByModule(module, PageRequest.of(page, size)));
         }
         if (operator != null && !operator.isEmpty()) {
-            return Result.success(logService.listByOperator(operator, PageRequest.of(page, size)));
+            return Result.ok(logService.listByOperator(operator, PageRequest.of(page, size)));
         }
-        return Result.success(logService.list(PageRequest.of(page, size)));
+        return Result.ok(logService.list(PageRequest.of(page, size)));
     }
 }
