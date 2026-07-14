@@ -73,6 +73,15 @@
   - AuthService 添加登录日志
   - RepairRequestService 添加报修日志
   - OwnerService 添加业主管理日志
+  - Admin 前端 Logs.vue 日志查看页面
+  - 三语 i18n 翻译
+- ✅ 添加单元测试（31个测试全部通过）
+  - 添加 H2 内存数据库依赖
+  - AuthServiceTest: 4个测试
+  - RepairRequestServiceTest: 7个测试
+  - OwnerServiceTest: 7个测试
+  - OperationLogServiceTest: 5个测试
+  - JwtTokenUtilTest: 8个测试
   - Admin 前端创建 Logs.vue 日志查看页面
   - 添加三语 i18n 翻译（log.time/module/operation/operator/detail/success/fail）
 - ⏳ 添加单元测试（待定）
