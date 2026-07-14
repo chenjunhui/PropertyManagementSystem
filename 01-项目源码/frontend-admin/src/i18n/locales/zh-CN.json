@@ -90,9 +90,9 @@
     "RECTIFY": "需整改"
   },
   "unitStatus": {
-    "0": "装修中",
-    "1": "已入住",
-    "2": "空置"
+    "OCCUPIED": "已入住",
+    "VACANT": "空置",
+    "DECORATING": "装修中"
   },
   "role": {
     "ADMIN": "管理员",

@@ -32,7 +32,7 @@
       <div class="card chart-card">
         <h3 class="chart-title">{{ t('dashboard.unitStatus') }}</h3>
         <ul v-if="unitStatusData.length" class="legend">
-          <li v-for="item in unitStatusData" :key="item.name">{{ t(`status.${item.name}`) }} · {{ item.value }}</li>
+          <li v-for="item in unitStatusData" :key="item.name">{{ t(`unitStatus.${item.name}`) }} · {{ item.value }}</li>
         </ul>
         <p v-else class="empty">{{ t('common.empty') }}</p>
       </div>

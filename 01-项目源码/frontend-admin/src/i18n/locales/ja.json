@@ -90,9 +90,9 @@
     "RECTIFY": "是正要"
   },
   "unitStatus": {
-    "0": "改修中",
-    "1": "入居中",
-    "2": "空室"
+    "OCCUPIED": "入居中",
+    "VACANT": "空室",
+    "DECORATING": "改修中"
   },
   "role": {
     "ADMIN": "管理者",

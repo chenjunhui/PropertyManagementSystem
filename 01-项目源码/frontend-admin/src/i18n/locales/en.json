@@ -90,9 +90,9 @@
     "RECTIFY": "Rectify"
   },
   "unitStatus": {
-    "0": "Renovating",
-    "1": "Occupied",
-    "2": "Vacant"
+    "OCCUPIED": "Occupied",
+    "VACANT": "Vacant",
+    "DECORATING": "Renovating"
   },
   "role": {
     "ADMIN": "Admin",
