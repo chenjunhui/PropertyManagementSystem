@@ -93,6 +93,19 @@
     "registerDate": "Register Date",
     "sqm": "㎡"
   },
+  "owner": {
+    "ownerNo": "Owner No",
+    "name": "Name",
+    "propertyCert": "Property Cert",
+    "unitSection": "Section",
+    "registerDate": "Register Date"
+  },
+  "propertyFee": {
+    "title": "Property Fee"
+  },
+  "empty": {
+    "noProperty": "No property info. Please contact property management."
+  },
   "repair": {
     "title": "Repair Request",
     "myRepairs": "My Repairs",

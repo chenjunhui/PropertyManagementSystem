@@ -92,7 +92,10 @@
   "unitStatus": {
     "OCCUPIED": "已入住",
     "VACANT": "空置",
-    "DECORATING": "装修中"
+    "DECORATING": "装修中",
+    "0": "装修中",
+    "1": "已入住",
+    "2": "空置"
   },
   "role": {
     "ADMIN": "管理员",

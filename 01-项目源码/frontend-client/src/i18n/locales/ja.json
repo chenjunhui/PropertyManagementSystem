@@ -93,6 +93,19 @@
     "registerDate": "登録日",
     "sqm": "㎡"
   },
+  "owner": {
+    "ownerNo": "オーナー番号",
+    "name": "氏名",
+    "propertyCert": "権利証番号",
+    "unitSection": "ユニット",
+    "registerDate": "登録日"
+  },
+  "propertyFee": {
+    "title": "管理費"
+  },
+  "empty": {
+    "noProperty": "物件情報がありません。管理处にお問い合わせください。"
+  },
   "repair": {
     "title": "修理申請",
     "myRepairs": "修理履歴",

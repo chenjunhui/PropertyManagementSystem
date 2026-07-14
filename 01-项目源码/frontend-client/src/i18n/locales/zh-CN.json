@@ -93,6 +93,19 @@
     "registerDate": "登记日期",
     "sqm": "㎡"
   },
+  "owner": {
+    "ownerNo": "业主编号",
+    "name": "姓名",
+    "propertyCert": "产权证号",
+    "unitSection": "所属单元",
+    "registerDate": "登记日期"
+  },
+  "propertyFee": {
+    "title": "物业费账单"
+  },
+  "empty": {
+    "noProperty": "暂无房屋信息，请联系物业绑定房屋"
+  },
   "repair": {
     "title": "报修申请",
     "myRepairs": "我的报修",
