@@ -43,6 +43,8 @@ mvn spring-boot:run
 
 验证：访问 http://localhost:2010/api/dashboard/stats
 
+**API 文档（Swagger UI）**：http://localhost:2010/swagger-ui/index.html
+
 ### 2. 管理端
 
 ```bash
