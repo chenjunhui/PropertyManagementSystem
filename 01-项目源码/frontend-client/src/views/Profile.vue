@@ -6,7 +6,7 @@
       <div class="form-grid">
         <div class="form-group"><label>{{ t('owner.ownerNo') }}</label><input :value="owner.ownerNo" class="input" disabled /></div>
         <div class="form-group"><label>{{ t('profile.name') }}</label><input v-model="form.name" class="input" maxlength="50" /></div>
-        <div class="form-group"><label>{{ t('profile.gender') }}</label><input :value="owner.gender" class="input" disabled /></div>
+        <div class="form-group"><label>{{ t('profile.gender') }}</label><input :value="t(`gender.${owner.gender}`)" class="input" disabled /></div>
         <div class="form-group"><label>{{ t('owner.unitSection') }}</label><input :value="owner.grade || '—'" class="input" disabled /></div>
         <div class="form-group">
           <label>{{ t('profile.phone') }}</label>

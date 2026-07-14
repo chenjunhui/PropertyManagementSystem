@@ -157,14 +157,18 @@
     "UNPAID": "未缴"
   },
   "unitStatus": {
-    "0": "装修中",
-    "1": "已入住",
-    "2": "空置"
+    "OCCUPIED": "已入住",
+    "VACANT": "空置",
+    "DECORATING": "装修中"
   },
   "role": {
     "ADMIN": "管理员",
     "PROPERTY_MANAGER": "物业管家",
     "OWNER": "业主"
+  },
+  "gender": {
+    "男": "男",
+    "女": "女"
   },
   "validation": {
     "phoneRequired": "手机号不能为空",

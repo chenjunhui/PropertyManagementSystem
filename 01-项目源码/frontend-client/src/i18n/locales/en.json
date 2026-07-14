@@ -157,14 +157,18 @@
     "UNPAID": "Unpaid"
   },
   "unitStatus": {
-    "0": "Renovating",
-    "1": "Occupied",
-    "2": "Vacant"
+    "OCCUPIED": "Occupied",
+    "VACANT": "Vacant",
+    "DECORATING": "Renovating"
   },
   "role": {
     "ADMIN": "Admin",
     "PROPERTY_MANAGER": "Property Manager",
     "OWNER": "Owner"
+  },
+  "gender": {
+    "男": "Male",
+    "女": "Female"
   },
   "validation": {
     "phoneRequired": "Phone number is required",

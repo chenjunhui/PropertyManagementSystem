@@ -157,14 +157,18 @@
     "UNPAID": "未払い"
   },
   "unitStatus": {
-    "0": "改修中",
-    "1": "入居中",
-    "2": "空室"
+    "OCCUPIED": "入居中",
+    "VACANT": "空室",
+    "DECORATING": "改修中"
   },
   "role": {
     "ADMIN": "管理者",
     "PROPERTY_MANAGER": "管理人",
     "OWNER": "オーナー"
+  },
+  "gender": {
+    "男": "男性",
+    "女": "女性"
   },
   "validation": {
     "phoneRequired": "電話番号は必須です",
