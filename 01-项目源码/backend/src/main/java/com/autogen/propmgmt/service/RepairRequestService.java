@@ -17,6 +17,7 @@ public class RepairRequestService {
 
     private final RepairRequestRepository repairRequestRepository;
     private final MessageSource messageSource;
+    private final OperationLogService logService;
 
     public List<RepairRequest> list(String status) {
         if (status != null && !status.isBlank()) {
@@ -35,11 +36,14 @@ public class RepairRequestService {
     }
 
     public RepairRequest save(RepairRequest request) {
-        return repairRequestRepository.save(request);
+        RepairRequest saved = repairRequestRepository.save(request);
+        logService.log("报修", "提交报修", null, null, "标题: " + request.getTitle(), null);
+        return saved;
     }
 
     public RepairRequest updateStatus(Long id, String status, String remark) {
         RepairRequest request = getById(id);
+        String oldStatus = request.getStatus();
         request.setStatus(status);
         if (remark != null) {
             request.setRemark(remark);
@@ -47,10 +51,13 @@ public class RepairRequestService {
         if ("DONE".equals(status)) {
             request.setFinishDate(LocalDate.now());
         }
-        return repairRequestRepository.save(request);
+        RepairRequest updated = repairRequestRepository.save(request);
+        logService.log("报修", "更新状态", null, null, "ID: " + id + ", " + oldStatus + " → " + status, null);
+        return updated;
     }
 
     public void delete(Long id) {
         repairRequestRepository.deleteById(id);
+        logService.log("报修", "删除报修", null, null, "ID: " + id, null);
     }
 }

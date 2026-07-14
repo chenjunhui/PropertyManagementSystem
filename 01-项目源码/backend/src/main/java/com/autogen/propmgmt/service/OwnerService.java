@@ -17,6 +17,7 @@ public class OwnerService {
 
     private final OwnerRepository ownerRepository;
     private final MessageSource messageSource;
+    private final OperationLogService logService;
 
     public List<Owner> list(String keyword) {
         if (StringUtils.hasText(keyword)) {
@@ -36,10 +37,17 @@ public class OwnerService {
     }
 
     public Owner save(Owner owner) {
-        return ownerRepository.save(owner);
+        Owner saved = ownerRepository.save(owner);
+        if (owner.getId() == null) {
+            logService.log("业主", "新增业主", null, null, "姓名: " + owner.getName(), null);
+        } else {
+            logService.log("业主", "更新业主", null, null, "ID: " + owner.getId() + ", 姓名: " + owner.getName(), null);
+        }
+        return saved;
     }
 
     public void delete(Long id) {
         ownerRepository.deleteById(id);
+        logService.log("业主", "删除业主", null, null, "ID: " + id, null);
     }
 }

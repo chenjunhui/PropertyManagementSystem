@@ -56,14 +56,26 @@
 ## 待完成
 
 ### 1. 客户端主题集成
-- 更新 `frontend-client/src/main.js` — 添加 theme store 初始化
-- 更新 `frontend-client/src/layout/ClientLayout.vue` — 添加 ThemeSwitcher
-- 更新 `frontend-client/src/styles/global.css` — 使用主题 CSS 变量
+- ✅ 完成：main.js 初始化 theme store
+- ✅ 完成：ThemeSwitcher 组件集成到 ClientLayout
+- ✅ 完成：global.css 使用主题 CSS 变量
+- ✅ 完成：右上角毛玻璃效果控件
+- ✅ 完成：登录/注册页面背景跟随主题
 
 ### 2. 可选优化
-- 删除未使用的教育模板文件（Teachers.vue、Attendance.vue、LeaveRequests.vue）
-- 添加操作日志
-- 添加单元测试
+- ✅ 删除未使用的教育模板文件（Teachers.vue、Attendance.vue、LeaveRequests.vue）
+- ✅ 添加操作日志
+  - 创建 `OperationLog` 实体
+  - 创建 `OperationLogRepository`
+  - 创建 `OperationLogService` 记录操作
+  - 创建 `OperationLogController` 查询接口
+  - 创建 SQL 迁移脚本 `04_operation_log.sql`
+  - AuthService 添加登录日志
+  - RepairRequestService 添加报修日志
+  - OwnerService 添加业主管理日志
+  - Admin 前端创建 Logs.vue 日志查看页面
+  - 添加三语 i18n 翻译（log.time/module/operation/operator/detail/success/fail）
+- ⏳ 添加单元测试（待定）
 
 ## 关键文件路径
 

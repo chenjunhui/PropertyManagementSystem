@@ -12,6 +12,7 @@ import PropertyFees from '../views/PropertyFees.vue'
 import Announcements from '../views/Announcements.vue'
 import Visitors from '../views/Visitors.vue'
 import InspectionRecords from '../views/InspectionRecords.vue'
+import Logs from '../views/Logs.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -31,6 +32,7 @@ const router = createRouter({
         { path: 'visitors', component: Visitors },
         { path: 'announcements', component: Announcements },
         { path: 'property-fees', component: PropertyFees },
+        { path: 'logs', component: Logs },
         { path: 'profile', component: Profile }
       ]
     }

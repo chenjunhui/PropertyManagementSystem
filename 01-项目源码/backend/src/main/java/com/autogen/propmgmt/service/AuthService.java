@@ -31,6 +31,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
     private final MessageSource messageSource;
+    private final OperationLogService logService;
 
     private String msg(String key, Object... args) {
         return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
@@ -38,11 +39,16 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request, String portal) {
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new BusinessException(msg("auth.login.failed")));
+                .orElseThrow(() -> {
+                    logService.logError("认证", "登录", request.getUsername(), portal, "用户不存在", null, "用户不存在");
+                    return new BusinessException(msg("auth.login.failed"));
+                });
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            logService.logError("认证", "登录", request.getUsername(), portal, "密码错误", null, "密码错误");
             throw new BusinessException(msg("auth.login.failed"));
         }
         if (user.getStatus() != null && user.getStatus() == 0) {
+            logService.logError("认证", "登录", request.getUsername(), portal, "账号已禁用", null, "账号已禁用");
             throw new BusinessException(msg("auth.login.disabled"));
         }
         validatePortal(user.getRole(), portal);
@@ -52,6 +58,7 @@ public class AuthService {
         String accessToken = jwtTokenUtil.generateAccessToken(user.getId(), user.getUsername(), user.getRole());
         String refreshToken = jwtTokenUtil.generateRefreshToken(user.getId(), user.getUsername());
         String avatar = resolveAvatar(user);
+        logService.log("认证", "登录", user.getUsername(), user.getRole(), "登录成功", null);
         return new LoginResponse(user.getId(), user.getUsername(), user.getName(),
                 user.getRole(), accessToken, refreshToken, ACCESS_TOKEN_EXPIRES_IN, ownerId, avatar);
     }

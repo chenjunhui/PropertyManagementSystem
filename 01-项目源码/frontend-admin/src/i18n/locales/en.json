@@ -18,6 +18,9 @@
     "back": "Back",
     "yes": "Yes",
     "no": "No",
+    "all": "All",
+    "prev": "Previous",
+    "next": "Next",
     "actions": "Actions",
     "total": "Total",
     "items": "items",
@@ -34,6 +37,7 @@
     "visitors": "Visitors",
     "announcements": "Announcements",
     "propertyFees": "Property Fees",
+    "logs": "Operation Logs",
     "profile": "Profile",
     "workbench": "Workbench"
   },
@@ -242,5 +246,14 @@
     "noData": "No data available",
     "noAnnouncements": "No announcements",
     "noProperty": "No property info. Please contact property management."
+  },
+  "log": {
+    "time": "Time",
+    "module": "Module",
+    "operation": "Operation",
+    "operator": "Operator",
+    "detail": "Detail",
+    "success": "Success",
+    "fail": "Failed"
   }
 }
