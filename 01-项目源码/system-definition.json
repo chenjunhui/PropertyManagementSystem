@@ -1,0 +1,167 @@
+{
+  "project_dir": "PropertyManagementSystem",
+  "project_id": "property-management-system",
+  "project_name": "物业管理系统",
+  "project_name_en": "Property Management System",
+  "project_abbr": "pms",
+  "db_name": "rb_pms",
+  "keywords": ["物业", "小区", "楼栋", "房屋", "业主", "物业费", "报修", "管理"],
+  "tech_stack": "Spring Boot 3 + Vue 3 + MySQL 8",
+  "package_name": "propmgmt",
+  "package_path": "propmgmt",
+  "ports": {
+    "backend": 2010,
+    "admin": 4010,
+    "client": 3010
+  },
+  "roles": [
+    { "code": "ADMIN", "name": "管理员", "portal": "admin" },
+    { "code": "PROPERTY_MANAGER", "name": "物业管家", "portal": "admin" },
+    { "code": "OWNER", "name": "业主", "portal": "client" }
+  ],
+  "modules": [
+  {
+    "code": "dashboard",
+    "name": "数据概览",
+    "portal": "admin",
+    "description": "统计楼栋、房屋、业主与报修概况",
+    "article_intro": "登录管理端后的首页模块，集中展示楼栋、房屋、在册业主与报修等核心指标，并通过图表直观呈现房屋分布与报修状态。"
+  },
+  {
+    "code": "building",
+    "name": "楼栋管理",
+    "portal": "admin",
+    "description": "小区楼栋信息维护"
+  },
+  {
+    "code": "unit",
+    "name": "房屋管理",
+    "portal": "admin",
+    "description": "房屋单元与面积管理"
+  },
+  {
+    "code": "owner",
+    "name": "业主管理",
+    "portal": "admin",
+    "description": "业主档案与房屋绑定"
+  },
+  {
+    "code": "property_fee",
+    "name": "物业费管理",
+    "portal": "admin",
+    "description": "物业费账单生成与缴费状态"
+  },
+  {
+    "code": "repair",
+    "name": "报修管理",
+    "portal": "admin",
+    "description": "报修受理与处理跟踪"
+  },
+  {
+    "code": "visitor",
+    "name": "访客登记",
+    "portal": "admin",
+    "description": "访客来访记录与审批"
+  },
+  {
+    "code": "announce",
+    "name": "公告通知",
+    "portal": "admin",
+    "description": "小区通知与物业公告发布"
+  },
+  {
+    "code": "inspection",
+    "name": "巡检记录",
+    "portal": "admin",
+    "description": "公共区域巡检与整改记录"
+  },
+  {
+    "code": "register",
+    "name": "业主注册",
+    "portal": "client",
+    "description": "新业主在线注册账号"
+  },
+  {
+    "code": "profile",
+    "name": "个人信息",
+    "portal": "client",
+    "description": "业主查看与修改个人资料"
+  },
+  {
+    "code": "my_property",
+    "name": "我的房屋",
+    "portal": "client",
+    "description": "查看房屋与产权信息"
+  },
+  {
+    "code": "repair_apply",
+    "name": "报修申请",
+    "portal": "client",
+    "description": "在线提交房屋设施报修"
+  },
+  {
+    "code": "announcements",
+    "name": "公告通知",
+    "portal": "client",
+    "description": "查看小区通知与物业公告"
+  },
+  {
+    "code": "visitor_apply",
+    "name": "访客预约",
+    "portal": "client",
+    "description": "业主为访客提交来访预约"
+  }
+],
+  "entities": [
+  {
+    "name": "User",
+    "table": "sys_user",
+    "comment": "系统用户"
+  },
+  {
+    "name": "PropBuilding",
+    "table": "prop_building",
+    "comment": "小区楼栋"
+  },
+  {
+    "name": "PropUnit",
+    "table": "prop_unit",
+    "comment": "房屋单元"
+  },
+  {
+    "name": "Owner",
+    "table": "owner",
+    "comment": "业主档案"
+  },
+  {
+    "name": "PropertyFee",
+    "table": "property_fee",
+    "comment": "物业费账单"
+  },
+  {
+    "name": "RepairRequest",
+    "table": "repair_request",
+    "comment": "报修申请"
+  },
+  {
+    "name": "VisitorRecord",
+    "table": "visitor_record",
+    "comment": "访客登记"
+  },
+  {
+    "name": "PropAnnouncement",
+    "table": "prop_announcement",
+    "comment": "公告通知"
+  },
+  {
+    "name": "InspectionRecord",
+    "table": "inspection_record",
+    "comment": "巡检记录"
+  }
+],
+  "design_system": {
+    "style": "Community Emerald",
+    "primary_color": "#059669",
+    "reference": "design-system/MASTER.md"
+  }
+}

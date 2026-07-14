@@ -1,0 +1,100 @@
+<template>
+  <div>
+    <h2 class="page-title">{{ t('profile.title') }}</h2>
+    <div class="card profile-card" v-if="profile">
+      <AvatarUpload v-model="form.avatar" />
+      <div class="form-grid">
+        <div class="form-group">
+          <label>{{ t('auth.username') }}</label>
+          <input :value="profile.username" class="input" disabled />
+        </div>
+        <div class="form-group">
+          <label>{{ t('common.status') }}</label>
+          <input :value="roleLabel" class="input" disabled />
+        </div>
+        <div class="form-group">
+          <label>{{ t('profile.name') }}</label>
+          <input v-model="form.name" class="input" maxlength="50" />
+        </div>
+        <div class="form-group">
+          <label>{{ t('profile.phone') }}</label>
+          <input v-model="form.phone" class="input" maxlength="11" @input="form.phone = form.phone.replace(/\D/g,'').slice(0,11)" />
+          <span v-if="errors.phone" class="err">{{ errors.phone }}</span>
+        </div>
+        <div class="form-group">
+          <label>{{ t('profile.email') }}</label>
+          <input v-model="form.email" class="input" maxlength="100" />
+          <span v-if="errors.email" class="err">{{ errors.email }}</span>
+        </div>
+      </div>
+      <p v-if="msg" :class="msgOk ? 'msg-ok' : 'err'">{{ msg }}</p>
+      <button class="btn btn-primary" @click="save" :disabled="saving">{{ saving ? t('profile.saving') : t('profile.save') }}</button>
+    </div>
+    <div v-else class="card"><p>{{ t('common.loading') }}</p></div>
+  </div>
+</template>
+
+<script setup>
+import { computed, onMounted, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useUserStore } from '../stores/user'
+import request from '../api/request'
+import AvatarUpload from '../components/AvatarUpload.vue'
+import { validatePhone, validateEmail } from '../utils/validators'
+
+const { t } = useI18n()
+const userStore = useUserStore()
+const profile = ref(null)
+const saving = ref(false)
+const msg = ref('')
+const msgOk = ref(false)
+const errors = reactive({ phone: '', email: '' })
+const form = reactive({ name: '', phone: '', email: '', avatar: '' })
+
+const roleLabel = computed(() => t(`role.${profile.value?.role}`))
+
+onMounted(async () => {
+  const uid = userStore.user?.userId
+  if (!uid) return
+  profile.value = await request.get(`/profile/user/${uid}`)
+  form.name = profile.value.name || ''
+  form.phone = profile.value.phone || ''
+  form.email = profile.value.email || ''
+  form.avatar = profile.value.avatar || ''
+  userStore.patchUser({ name: profile.value.name, avatar: profile.value.avatar || null })
+})
+
+async function save() {
+  errors.phone = validatePhone(form.phone)
+  errors.email = validateEmail(form.email)
+  if (errors.phone || errors.email) return
+  saving.value = true
+  msg.value = ''
+  try {
+    const payload = {
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      avatar: form.avatar?.trim() || null
+    }
+    const updated = await request.put(`/profile/user/${userStore.user.userId}`, payload)
+    profile.value = updated
+    form.avatar = updated.avatar || ''
+    userStore.patchUser({ name: updated.name, avatar: updated.avatar || null })
+    msg.value = t('common.save')
+    msgOk.value = true
+  } catch (e) {
+    msg.value = e.message || t('common.requestFailed')
+    msgOk.value = false
+  } finally {
+    saving.value = false
+  }
+}
+</script>
+
+<style scoped>
+.profile-card { max-width: 720px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.err { color: var(--color-danger); font-size: 12px; }
+.msg-ok { color: var(--color-success); font-size: 13px; margin-bottom: 12px; }
+</style>

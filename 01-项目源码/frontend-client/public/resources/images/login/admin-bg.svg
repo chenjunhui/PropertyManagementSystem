@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="物业管理端背景">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22"/>
+      <stop offset="45%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0.8"/>
+    </linearGradient>
+    <pattern id="grid" width="96" height="96" patternUnits="userSpaceOnUse">
+      <path d="M96 0H0V96" fill="none" stroke="#6ee7b7" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="75%" cy="25%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#glow)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <rect y="620" width="1920" height="460" fill="url(#ground)"/>
+  <!-- 左侧楼栋群 -->
+  <g opacity="0.85">
+    <rect x="120" y="380" width="110" height="420" rx="4" fill="#065f46"/>
+    <rect x="250" y="320" width="95" height="480" rx="4" fill="#047857"/>
+    <rect x="370" y="420" width="130" height="380" rx="4" fill="#059669"/>
+    <rect x="520" y="350" width="100" height="450" rx="4" fill="#065f46"/>
+  </g>
+  <!-- 窗户 -->
+  <g fill="#a7f3d0" opacity="0.22">
+    <rect x="140" y="420" width="18" height="14" rx="1"/><rect x="170" y="420" width="18" height="14" rx="1"/>
+    <rect x="140" y="460" width="18" height="14" rx="1"/><rect x="170" y="460" width="18" height="14" rx="1"/>
+    <rect x="270" y="360" width="18" height="14" rx="1"/><rect x="300" y="360" width="18" height="14" rx="1"/>
+    <rect x="390" y="460" width="18" height="14" rx="1"/><rect x="420" y="460" width="18" height="14" rx="1"/>
+    <rect x="450" y="460" width="18" height="14" rx="1"/>
+  </g>
+  <!-- 道路 -->
+  <rect x="0" y="780" width="1920" height="36" fill="#064e3b" opacity="0.6"/>
+  <rect x="0" y="795" width="1920" height="4" fill="#fde68a" opacity="0.15"/>
+  <!-- 树木 -->
+  <circle cx="720" cy="720" r="55" fill="#065f46" opacity="0.7"/>
+  <rect x="712" y="720" width="16" height="70" fill="#064e3b"/>
+  <circle cx="860" cy="750" r="40" fill="#047857" opacity="0.55"/>
+  <rect x="854" y="750" width="12" height="55" fill="#064e3b"/>
+</svg>

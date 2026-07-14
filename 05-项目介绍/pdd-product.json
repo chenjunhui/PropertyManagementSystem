@@ -1,0 +1,155 @@
+{
+  "admin-login": {
+    "key": "admin-login",
+    "local": "pdd-product/pdd-admin-login.png",
+    "file": "pdd-admin-login.png",
+    "size": 1200,
+    "source_key": "admin-login",
+    "source_file": "admin-login.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-admin-login.png"
+  },
+  "client-login": {
+    "key": "client-login",
+    "local": "pdd-product/pdd-client-login.png",
+    "file": "pdd-client-login.png",
+    "size": 1200,
+    "source_key": "client-login",
+    "source_file": "client-login.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-client-login.png"
+  },
+  "dashboard": {
+    "key": "dashboard",
+    "local": "pdd-product/pdd-dashboard.png",
+    "file": "pdd-dashboard.png",
+    "size": 1200,
+    "source_key": "dashboard",
+    "source_file": "dashboard.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-dashboard.png"
+  },
+  "building": {
+    "key": "building",
+    "local": "pdd-product/pdd-building.png",
+    "file": "pdd-building.png",
+    "size": 1200,
+    "source_key": "building",
+    "source_file": "building.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-building.png"
+  },
+  "unit": {
+    "key": "unit",
+    "local": "pdd-product/pdd-unit.png",
+    "file": "pdd-unit.png",
+    "size": 1200,
+    "source_key": "unit",
+    "source_file": "unit.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-unit.png"
+  },
+  "owner": {
+    "key": "owner",
+    "local": "pdd-product/pdd-owner.png",
+    "file": "pdd-owner.png",
+    "size": 1200,
+    "source_key": "owner",
+    "source_file": "owner.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-owner.png"
+  },
+  "property_fee": {
+    "key": "property_fee",
+    "local": "pdd-product/pdd-property_fee.png",
+    "file": "pdd-property_fee.png",
+    "size": 1200,
+    "source_key": "property_fee",
+    "source_file": "property_fee.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-property_fee.png"
+  },
+  "repair": {
+    "key": "repair",
+    "local": "pdd-product/pdd-repair.png",
+    "file": "pdd-repair.png",
+    "size": 1200,
+    "source_key": "repair",
+    "source_file": "repair.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-repair.png"
+  },
+  "visitor": {
+    "key": "visitor",
+    "local": "pdd-product/pdd-visitor.png",
+    "file": "pdd-visitor.png",
+    "size": 1200,
+    "source_key": "visitor",
+    "source_file": "visitor.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-visitor.png"
+  },
+  "announce": {
+    "key": "announce",
+    "local": "pdd-product/pdd-announce.png",
+    "file": "pdd-announce.png",
+    "size": 1200,
+    "source_key": "announce",
+    "source_file": "announce.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-announce.png"
+  },
+  "inspection": {
+    "key": "inspection",
+    "local": "pdd-product/pdd-inspection.png",
+    "file": "pdd-inspection.png",
+    "size": 1200,
+    "source_key": "inspection",
+    "source_file": "inspection.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-inspection.png"
+  },
+  "register": {
+    "key": "register",
+    "local": "pdd-product/pdd-register.png",
+    "file": "pdd-register.png",
+    "size": 1200,
+    "source_key": "register",
+    "source_file": "register.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-register.png"
+  },
+  "profile": {
+    "key": "profile",
+    "local": "pdd-product/pdd-profile.png",
+    "file": "pdd-profile.png",
+    "size": 1200,
+    "source_key": "profile",
+    "source_file": "profile.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-profile.png"
+  },
+  "my_property": {
+    "key": "my_property",
+    "local": "pdd-product/pdd-my_property.png",
+    "file": "pdd-my_property.png",
+    "size": 1200,
+    "source_key": "my_property",
+    "source_file": "my_property.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-my_property.png"
+  },
+  "repair_apply": {
+    "key": "repair_apply",
+    "local": "pdd-product/pdd-repair_apply.png",
+    "file": "pdd-repair_apply.png",
+    "size": 1200,
+    "source_key": "repair_apply",
+    "source_file": "repair_apply.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-repair_apply.png"
+  },
+  "announcements": {
+    "key": "announcements",
+    "local": "pdd-product/pdd-announcements.png",
+    "file": "pdd-announcements.png",
+    "size": 1200,
+    "source_key": "announcements",
+    "source_file": "announcements.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-announcements.png"
+  },
+  "visitor_apply": {
+    "key": "visitor_apply",
+    "local": "pdd-product/pdd-visitor_apply.png",
+    "file": "pdd-visitor_apply.png",
+    "size": 1200,
+    "source_key": "visitor_apply",
+    "source_file": "visitor_apply.png",
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/pdd/pdd-visitor_apply.png"
+  }
+}

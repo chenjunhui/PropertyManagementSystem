@@ -1,0 +1,6 @@
+【技术栈与架构】
+架构：前后端分离 · RESTful API · 三端部署（后端 2010 / 管理端 4010 / 客户端 3010）
+后端技术栈：Spring Boot 3.2 · Spring Web · Spring Data JPA · Hibernate · Bean Validation · Lombok · MySQL Connector/J · Maven · JDK 17
+前端技术栈：Vue 3 · Vue Router 4 · Pinia · Axios · Vite 5 · @iconify-icons/mdi · 组件化 SPA（管理端 4010 / 客户端 3010）
+数据库：MySQL 8 · utf8mb4 · 库名 `rb_pms`（建库 + 表结构 + Mock 数据一键脚本）
+其他：本地静态资源登录背景 · 文件上传（头像/附件）· 角色菜单权限 · CORS 跨域

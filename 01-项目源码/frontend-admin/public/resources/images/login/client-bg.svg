@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="物业业主端背景">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecfdf5"/>
+      <stop offset="40%" stop-color="#d1fae5"/>
+      <stop offset="100%" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <linearGradient id="house" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <!-- 右侧大房屋插画 -->
+  <g transform="translate(1180,220)" opacity="0.45">
+    <path d="M0 280 L200 80 L400 280 V480 H0 Z" fill="url(#house)"/>
+    <rect x="140" y="320" width="120" height="160" rx="4" fill="#047857"/>
+    <rect x="60" y="260" width="70" height="55" rx="3" fill="#34d399" opacity="0.6"/>
+    <rect x="270" y="260" width="70" height="55" rx="3" fill="#34d399" opacity="0.6"/>
+    <rect x="175" y="200" width="50" height="80" fill="#065f46"/>
+  </g>
+  <!-- 左侧小房屋 -->
+  <g transform="translate(980,380)" opacity="0.28">
+    <path d="M0 180 L120 60 L240 180 V300 H0 Z" fill="#059669"/>
+    <rect x="90" y="210" width="60" height="90" rx="3" fill="#047857"/>
+  </g>
+  <!-- 装饰圆 -->
+  <circle cx="200" cy="180" r="120" fill="#6ee7b7" opacity="0.2"/>
+  <circle cx="1680" cy="880" r="160" fill="#34d399" opacity="0.15"/>
+  <!-- 钥匙 -->
+  <g transform="translate(240,720)" opacity="0.18" fill="#047857">
+    <circle cx="40" cy="40" r="28" fill="none" stroke="#047857" stroke-width="10"/>
+    <rect x="65" y="34" width="90" height="14" rx="4"/>
+    <rect x="130" y="22" width="14" height="38" rx="2"/>
+    <rect x="108" y="22" width="14" height="26" rx="2"/>
+  </g>
+</svg>

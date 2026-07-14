@@ -1,0 +1,222 @@
+{
+  "intro": {
+    "order": 1,
+    "id": "intro",
+    "title": "项目简介",
+    "image": "01-项目简介.png",
+    "copy_file": "01-项目简介.txt",
+    "local": "wechat-post/01-项目简介.png",
+    "width": 900,
+    "height": 867,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/01-项目简介.png"
+  },
+  "tech": {
+    "order": 2,
+    "id": "tech",
+    "title": "技术栈与架构",
+    "image": "02-技术栈与架构.png",
+    "copy_file": "02-技术栈与架构.txt",
+    "local": "wechat-post/02-技术栈与架构.png",
+    "width": 900,
+    "height": 541,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/02-技术栈与架构.png"
+  },
+  "client-login": {
+    "order": 3,
+    "id": "client-login",
+    "title": "客户端登录",
+    "image": "03-客户端登录.png",
+    "copy_file": "03-客户端登录.txt",
+    "local": "wechat-post/03-客户端登录.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/03-客户端登录.png"
+  },
+  "dashboard": {
+    "order": 4,
+    "id": "dashboard",
+    "title": "数据概览",
+    "image": "04-数据概览.png",
+    "copy_file": "04-数据概览.txt",
+    "local": "wechat-post/04-数据概览.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/04-数据概览.png"
+  },
+  "building": {
+    "order": 5,
+    "id": "building",
+    "title": "楼栋管理",
+    "image": "05-楼栋管理.png",
+    "copy_file": "05-楼栋管理.txt",
+    "local": "wechat-post/05-楼栋管理.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/05-楼栋管理.png"
+  },
+  "unit": {
+    "order": 6,
+    "id": "unit",
+    "title": "房屋管理",
+    "image": "06-房屋管理.png",
+    "copy_file": "06-房屋管理.txt",
+    "local": "wechat-post/06-房屋管理.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/06-房屋管理.png"
+  },
+  "owner": {
+    "order": 7,
+    "id": "owner",
+    "title": "业主管理",
+    "image": "07-业主管理.png",
+    "copy_file": "07-业主管理.txt",
+    "local": "wechat-post/07-业主管理.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/07-业主管理.png"
+  },
+  "property_fee": {
+    "order": 8,
+    "id": "property_fee",
+    "title": "物业费管理",
+    "image": "08-物业费管理.png",
+    "copy_file": "08-物业费管理.txt",
+    "local": "wechat-post/08-物业费管理.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/08-物业费管理.png"
+  },
+  "repair": {
+    "order": 9,
+    "id": "repair",
+    "title": "报修管理",
+    "image": "09-报修管理.png",
+    "copy_file": "09-报修管理.txt",
+    "local": "wechat-post/09-报修管理.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/09-报修管理.png"
+  },
+  "visitor": {
+    "order": 10,
+    "id": "visitor",
+    "title": "访客登记",
+    "image": "10-访客登记.png",
+    "copy_file": "10-访客登记.txt",
+    "local": "wechat-post/10-访客登记.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/10-访客登记.png"
+  },
+  "announce": {
+    "order": 11,
+    "id": "announce",
+    "title": "公告通知",
+    "image": "11-公告通知.png",
+    "copy_file": "11-公告通知.txt",
+    "local": "wechat-post/11-公告通知.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/11-公告通知.png"
+  },
+  "inspection": {
+    "order": 12,
+    "id": "inspection",
+    "title": "巡检记录",
+    "image": "12-巡检记录.png",
+    "copy_file": "12-巡检记录.txt",
+    "local": "wechat-post/12-巡检记录.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/12-巡检记录.png"
+  },
+  "register": {
+    "order": 13,
+    "id": "register",
+    "title": "业主注册",
+    "image": "13-业主注册.png",
+    "copy_file": "13-业主注册.txt",
+    "local": "wechat-post/13-业主注册.png",
+    "width": 900,
+    "height": 797,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/13-业主注册.png"
+  },
+  "profile": {
+    "order": 14,
+    "id": "profile",
+    "title": "个人信息",
+    "image": "14-个人信息.png",
+    "copy_file": "14-个人信息.txt",
+    "local": "wechat-post/14-个人信息.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/14-个人信息.png"
+  },
+  "my_property": {
+    "order": 15,
+    "id": "my_property",
+    "title": "我的房屋",
+    "image": "15-我的房屋.png",
+    "copy_file": "15-我的房屋.txt",
+    "local": "wechat-post/15-我的房屋.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/15-我的房屋.png"
+  },
+  "repair_apply": {
+    "order": 16,
+    "id": "repair_apply",
+    "title": "报修申请",
+    "image": "16-报修申请.png",
+    "copy_file": "16-报修申请.txt",
+    "local": "wechat-post/16-报修申请.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/16-报修申请.png"
+  },
+  "announcements": {
+    "order": 17,
+    "id": "announcements",
+    "title": "公告通知",
+    "image": "17-公告通知.png",
+    "copy_file": "17-公告通知.txt",
+    "local": "wechat-post/17-公告通知.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/17-公告通知.png"
+  },
+  "visitor_apply": {
+    "order": 18,
+    "id": "visitor_apply",
+    "title": "访客预约",
+    "image": "18-访客预约.png",
+    "copy_file": "18-访客预约.txt",
+    "local": "wechat-post/18-访客预约.png",
+    "width": 900,
+    "height": 762,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/18-访客预约.png"
+  },
+  "quick-start": {
+    "order": 19,
+    "id": "quick-start",
+    "title": "快速运行",
+    "image": "19-快速运行.png",
+    "copy_file": "19-快速运行.txt",
+    "local": "wechat-post/19-快速运行.png",
+    "width": 900,
+    "height": 558,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/19-快速运行.png"
+  },
+  "source": {
+    "order": 20,
+    "id": "source",
+    "title": "获取源码",
+    "image": "20-获取源码.png",
+    "copy_file": "20-获取源码.txt",
+    "local": "wechat-post/20-获取源码.png",
+    "width": 900,
+    "height": 727,
+    "url": "https://ruobing-bucket.oss-cn-beijing.aliyuncs.com/articles/毕业设计/物业管理系统/wechat-post/20-获取源码.png"
+  }
+}
