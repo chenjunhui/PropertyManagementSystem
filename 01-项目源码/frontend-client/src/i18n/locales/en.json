@@ -192,5 +192,9 @@
     "ownerNoInvalid": "Owner number must be 4-20 alphanumeric characters",
     "passwordMinLength": "Password must be at least 6 characters",
     "passwordMismatch": "Passwords do not match"
+  },
+  "network": {
+    "disconnected": "Network Disconnected",
+    "reconnecting": "Attempting to reconnect..."
   }
 }

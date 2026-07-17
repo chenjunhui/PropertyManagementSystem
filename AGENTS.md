@@ -22,15 +22,35 @@ Database: MySQL 8, name `rb_pms`, user `root`, password `123456`.
 # 1. Initialize database (from 02-SQL完整脚本/)
 mysql -u root -p < 02-SQL完整脚本/00_full.sql
 
-# 2. Start backend (requires Java 17, Maven)
-cd 01-项目源码/backend && mvn spring-boot:run
+# 2. Build backend
+cd 01-项目源码/backend && mvn package -DskipTests
 
-# 3. Start admin frontend
-cd 01-项目源码/frontend-admin && npm install && npm run dev
-
-# 4. Start client frontend
-cd 01-项目源码/frontend-client && npm install && npm run dev
+# 3. Start all services via scripts
+cd scripts
+.\start-backend.ps1 all    # Start 3 backend instances (2010/2011/2012)
+.\start-nginx.ps1          # Start nginx reverse proxy
+.\status-backend.ps1       # Check backend status
+.\stop-backend.ps1 all     # Stop all backends
+.\stop-nginx.ps1           # Stop nginx
 ```
+
+## Nginx Proxy
+
+Nginx config at `03-deploy/nginx/nginx-win.conf`, install path: `C:\nginx\nginx-1.26.2`
+
+| Path | Target |
+|------|--------|
+| `/admin/` | Frontend Admin (static) |
+| `/client/` | Frontend Client (static) |
+| `/api/` | Backend load balanced (2010/2011/2012) |
+| `/swagger-ui/` | Swagger API docs |
+| `/monitor/` | System monitor |
+
+## API Docs
+
+- Swagger UI: `http://localhost/swagger-ui/index.html`
+- OpenAPI JSON: `http://localhost/v3/api-docs`
+- API Index: `http://localhost/api`
 
 ## Architecture
 

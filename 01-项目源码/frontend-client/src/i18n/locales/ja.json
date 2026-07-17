@@ -192,5 +192,9 @@
     "ownerNoInvalid": "オーナー番号は4-20文字の英数字である必要があります",
     "passwordMinLength": "パスワードは6文字以上必要です",
     "passwordMismatch": "パスワードが一致しません"
+  },
+  "network": {
+    "disconnected": "ネットワーク切断",
+    "reconnecting": "再接続を試みています..."
   }
 }

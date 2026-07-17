@@ -8,7 +8,7 @@
 | 项目类型 | B/S 架构管理系统 + 业主自助客户端 |
 | 目标用户 | 物业管理公司、小区业主 |
 | 技术栈 | Spring Boot 3 + Vue 3 + MySQL 8 |
-| 部署方式 | 三端分离：后端 API (:2010) + 管理端 (:4010) + 客户端 (:3010) |
+| 部署方式 | 开发：三端分离（后端 :2010 + 管理端 :4010 + 客户端 :3010）；生产：Nginx 负载均衡 + 多实例后端 + MySQL 主从 |
 
 ## 2. 用户角色
 
@@ -187,23 +187,53 @@ sys_role ──N:N── sys_menu (通过 sys_role_menu)
 ## 6. 非功能需求
 
 ### 6.1 性能
-- 单机部署，预计并发 < 100
-- 数据库连接池默认配置
+- 支持多实例部署，通过 Nginx 负载均衡分发请求
+- HikariCP 连接池优化：最小空闲 5、最大连接 20、泄漏检测 60s
+- 前端静态资源 gzip 压缩 + 30 天缓存
 
 ### 6.2 安全
 - 密码使用 BCrypt 加密存储
 - JWT Token 认证，Access Token 30 分钟过期，Refresh Token 7 天有效
-- CORS 限制：仅允许 localhost:4010 和 localhost:3010
-- 文件上传限制：5MB
+- CORS 限制：仅允许配置的前端域名
+- 文件上传限制：5MB，白名单校验文件类型
+- Actuator 健康检查端点仅允许内网访问
 
 ### 6.3 可用性
 - 响应式布局，支持 PC 端
 - 表单校验：必填项、格式校验
 - 操作反馈：成功/失败提示
+- 前端请求自动重试：网络错误 / 5xx 错误自动重试 2 次
+- 网络断连提示：断网时全屏提示，恢复后自动刷新
 
 ### 6.4 数据
 - 内置 Mock 数据，部署后可直接体验
-- 支持数据导出（未实现）
+- 数据库定时备份（mysqldump + gzip，保留 30 天）
+
+### 6.5 高可用与可靠性
+
+| 特性 | 实现方式 |
+|------|----------|
+| 后端多实例 | 3 个 Spring Boot 实例（2010/2011/2012），单实例故障不影响服务 |
+| 负载均衡 | Nginx least_conn 策略 + 自动故障转移（proxy_next_upstream） |
+| 数据库高可用 | MySQL 主从复制（GTID），主库故障可切换到从库 |
+| 健康检查 | Spring Boot Actuator /actuator/health 端点，含数据库连接状态 |
+| 自动重启 | health-check.sh + cron 每 5 分钟检测，挂掉自动拉起 |
+| 结构化日志 | logback-spring.xml，生产环境 JSON 格式，按天滚动保留 30 天 |
+| 慢查询告警 | AccessLogFilter 记录请求耗时，>2s 标记为 SLOW_REQUEST |
+| 异常处理 | GlobalExceptionHandler 区分业务异常/参数异常/系统异常，统一返回格式 |
+
+### 6.6 部署架构
+
+```
+用户请求 → Nginx(:80) → Backend-1(:2010)
+                       → Backend-2(:2011)
+                       → Backend-3(:2012)
+                       → MySQL Master(:3306) ←复制→ MySQL Slave(:3307)
+```
+
+支持两种部署方式：
+- **直接部署**：scripts/start-backend.ps1 启动多实例 + Nginx 反向代理
+- **容器化部署**：docker-compose.yml 一键启动（需安装 Docker）
 
 ## 7. 设计规范
 
@@ -212,6 +242,27 @@ sys_role ──N:N── sys_menu (通过 sys_role_menu)
 - 布局：管理端左侧边栏 + 顶栏；客户端顶栏导航
 - 圆角：8px（卡片）、6px（按钮/输入框）
 - 阴影：`0 1px 3px rgba(15, 23, 42, 0.08)`
+
+## 7.1 部署目录结构
+
+```
+PropertyManagementSystem/
+├── 01-项目源码/
+│   ├── backend/                    # Spring Boot 后端
+│   ├── frontend-admin/             # 管理端前端 (port 4010)
+│   └── frontend-client/            # 业主端前端 (port 3010)
+├── 02-SQL完整脚本/                  # 数据库脚本
+├── 03-deploy/                      # 部署配置
+│   ├── nginx/nginx.conf            # Nginx 负载均衡配置
+│   ├── mysql/                      # MySQL 主从配置
+│   └── docker-compose.yml          # Docker 一键部署
+├── 04*/                            # 部署文档
+├── scripts/                        # 运维脚本
+│   ├── start-backend.ps1           # 启动多实例
+│   ├── backup-db.sh                # 数据库备份
+│   └── health-check.sh             # 健康检查 + 自动重启
+└── PRD.md                          # 产品需求文档
+```
 
 ## 8. 测试账号
 
@@ -225,7 +276,8 @@ sys_role ──N:N── sys_menu (通过 sys_role_menu)
 
 1. ~~**认证机制简单**：Token 为 UUID，无过期、无刷新机制~~ ✅ 已修复
 2. ~~**密码明文存储**：未使用 BCrypt 等加密~~ ✅ 已修复
-3. **无操作日志**：关键操作无审计记录
-4. **无数据备份**：无自动备份策略
-5. **无单元测试**：后端无测试用例
-6. **无国际化**：仅中文界面
+3. ~~**无操作日志**：关键操作无审计记录~~ ✅ 已修复（OperationLogService + AccessLogFilter）
+4. ~~**无数据备份**：无自动备份策略~~ ✅ 已修复（backup-db.sh + cron 定时任务）
+5. ~~**无高可用**：单实例部署，故障即停服~~ ✅ 已修复（Nginx 负载均衡 + 多实例 + MySQL 主从）
+6. ~~**无单元测试**：后端无测试用例~~ ✅ 已修复（JUnit 5 + H2 内存数据库）
+7. ~~**无国际化**：仅中文界面~~ ✅ 已修复（vue-i18n，支持中文/英文/日文）

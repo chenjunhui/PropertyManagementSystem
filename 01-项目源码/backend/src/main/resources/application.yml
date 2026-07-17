@@ -1,5 +1,5 @@
 server:
-  port: 2010
+  port: ${SERVER_PORT:2010}
   servlet:
     encoding:
       charset: UTF-8
@@ -14,6 +14,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 30000
+      leak-detection-threshold: 60000
+      pool-name: HikariPool-PMS
   jpa:
     hibernate:
       ddl-auto: none
@@ -26,6 +34,20 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
 
 app:
   project-name: 物业管理系统

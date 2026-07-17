@@ -1,0 +1,165 @@
+version: '3.8'
+
+services:
+  # ========== MySQL Master ==========
+  mysql-master:
+    image: mysql:8.0
+    container_name: pms-mysql-master
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-123456}
+      MYSQL_DATABASE: rb_pms
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - mysql-master-data:/var/lib/mysql
+      - ./mysql/master.cnf:/etc/mysql/conf.d/master.cnf:ro
+      - ./mysql/init-replication.sql:/docker-entrypoint-initdb.d/01-replication.sql:ro
+    ports:
+      - "${DB_MASTER_PORT:-3306}:3306"
+    networks:
+      - pms-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-123456}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ========== MySQL Slave ==========
+  mysql-slave:
+    image: mysql:8.0
+    container_name: pms-mysql-slave
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-123456}
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - mysql-slave-data:/var/lib/mysql
+      - ./mysql/slave.cnf:/etc/mysql/conf.d/slave.cnf:ro
+    ports:
+      - "${DB_SLAVE_PORT:-3307}:3306"
+    depends_on:
+      mysql-master:
+        condition: service_healthy
+    networks:
+      - pms-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-123456}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ========== Backend Instance 1 ==========
+  backend-1:
+    build:
+      context: ../01-项目源码/backend
+      dockerfile: ../03-deploy/docker/Dockerfile.backend
+    container_name: pms-backend-1
+    restart: always
+    environment:
+      SERVER_PORT: "2010"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-master:3306/rb_pms?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD:-123456}
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mysql-master:
+        condition: service_healthy
+    networks:
+      - pms-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2010/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  # ========== Backend Instance 2 ==========
+  backend-2:
+    build:
+      context: ../01-项目源码/backend
+      dockerfile: ../03-deploy/docker/Dockerfile.backend
+    container_name: pms-backend-2
+    restart: always
+    environment:
+      SERVER_PORT: "2011"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-master:3306/rb_pms?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD:-123456}
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mysql-master:
+        condition: service_healthy
+    networks:
+      - pms-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2011/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  # ========== Backend Instance 3 ==========
+  backend-3:
+    build:
+      context: ../01-项目源码/backend
+      dockerfile: ../03-deploy/docker/Dockerfile.backend
+    container_name: pms-backend-3
+    restart: always
+    environment:
+      SERVER_PORT: "2012"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-master:3306/rb_pms?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD:-123456}
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mysql-master:
+        condition: service_healthy
+    networks:
+      - pms-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2012/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  # ========== Nginx Load Balancer ==========
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: pms-nginx
+    restart: always
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../01-项目源码/frontend-admin/dist:/opt/frontend-admin:ro
+      - ../01-项目源码/frontend-client/dist:/opt/frontend-client:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      backend-1:
+        condition: service_healthy
+      backend-2:
+        condition: service_healthy
+    networks:
+      - pms-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/admin/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  pms-net:
+    driver: bridge
+
+volumes:
+  mysql-master-data:
+    driver: local
+  mysql-slave-data:
+    driver: local
+  nginx-logs:
+    driver: local

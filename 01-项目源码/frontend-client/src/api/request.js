@@ -22,6 +22,20 @@ request.interceptors.response.use(
     return body.data
   },
   (err) => {
+    const config = err.config
+    if (config && !config._retry) {
+      const isNetworkError = !err.response
+      const isServerError = err.response && err.response.status >= 500
+      if (isNetworkError || isServerError) {
+        config._retry = (config._retry || 0) + 1
+        if (config._retry <= 2) {
+          return new Promise(resolve => {
+            setTimeout(() => resolve(request(config)), 1000 * config._retry)
+          })
+        }
+      }
+    }
+
     if (err.response?.status === 401) {
       localStorage.removeItem('client_user')
       router.push('/login')

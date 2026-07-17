@@ -1,0 +1,8 @@
+# 物业管理系统 - 定时任务配置
+# 复制此内容到 crontab: crontab -e
+
+# 每天凌晨3点备份数据库
+0 3 * * * /opt/property-management/scripts/backup-db.sh /opt/backup/rb_pms >> /opt/property-management/logs/backup.log 2>&1
+
+# 每5分钟检查后端健康状态，自动重启挂掉的实例
+*/5 * * * * /opt/property-management/scripts/health-check.sh >> /opt/property-management/logs/health-check.log 2>&1

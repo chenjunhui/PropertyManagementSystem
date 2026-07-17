@@ -192,5 +192,9 @@
     "ownerNoInvalid": "业主编号仅支持4-20位字母或数字",
     "passwordMinLength": "密码至少6位",
     "passwordMismatch": "两次输入的密码不一致"
+  },
+  "network": {
+    "disconnected": "网络连接已断开",
+    "reconnecting": "正在尝试重新连接..."
   }
 }

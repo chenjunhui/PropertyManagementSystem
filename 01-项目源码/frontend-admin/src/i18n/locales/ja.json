@@ -90,9 +90,9 @@
     "RECTIFY": "是正要"
   },
   "unitStatus": {
-    "OCCUPIED": "入居中",
-    "VACANT": "空室",
-    "DECORATING": "改修中"
+    "0": "改修中",
+    "1": "入居中",
+    "2": "空室"
   },
   "role": {
     "ADMIN": "管理者",
@@ -255,5 +255,9 @@
     "detail": "詳細",
     "success": "成功",
     "fail": "失敗"
+  },
+  "network": {
+    "disconnected": "ネットワーク切断",
+    "reconnecting": "再接続を試みています..."
   }
 }

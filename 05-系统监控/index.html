@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系统监控 - 物业管理系统</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+
+.header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid #1e293b;
+  padding: 20px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 { font-size: 20px; font-weight: 600; color: #f8fafc; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.status-badge.ok { background: #064e3b; color: #6ee7b7; }
+.status-badge.warn { background: #78350f; color: #fbbf24; }
+.status-badge.err { background: #7f1d1d; color: #fca5a5; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.status-dot.ok { background: #34d399; }
+.status-dot.warn { background: #fbbf24; }
+.status-dot.err { background: #f87171; }
+
+.refresh-info { font-size: 12px; color: #64748b; }
+.btn-refresh {
+  background: #1e293b; border: 1px solid #334155; color: #94a3b8;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.btn-refresh:hover { background: #334155; color: #e2e8f0; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 32px; }
+
+.section-title {
+  font-size: 14px; font-weight: 600; color: #94a3b8;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-bottom: 32px; }
+
+.card {
+  background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+  padding: 20px; transition: border-color 0.2s;
+}
+.card:hover { border-color: #475569; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.card-title { font-size: 15px; font-weight: 600; color: #f1f5f9; }
+.card-subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
+
+.metric { margin-bottom: 12px; }
+.metric-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+.metric-value { font-size: 20px; font-weight: 700; color: #f8fafc; font-variant-numeric: tabular-nums; }
+.metric-value.green { color: #34d399; }
+.metric-value.yellow { color: #fbbf24; }
+.metric-value.red { color: #f87171; }
+
+.detail-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid #1e293b;
+}
+.detail-row:last-child { border-bottom: none; }
+.detail-label { font-size: 13px; color: #94a3b8; }
+.detail-value { font-size: 13px; color: #e2e8f0; font-weight: 500; }
+
+.health-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+.health-item {
+  background: #0f172a; border: 1px solid #1e293b; border-radius: 8px;
+  padding: 12px; text-align: center;
+}
+.health-item .name { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+.health-item .status { font-size: 14px; font-weight: 600; }
+
+.chart-bar {
+  height: 6px; background: #0f172a; border-radius: 3px; overflow: hidden; margin-top: 6px;
+}
+.chart-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+
+.log-box {
+  background: #0f172a; border: 1px solid #1e293b; border-radius: 8px;
+  padding: 12px; max-height: 200px; overflow-y: auto; font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 12px; line-height: 1.6;
+}
+.log-entry { color: #94a3b8; }
+.log-entry .time { color: #475569; }
+.log-entry .ok { color: #34d399; }
+.log-entry .err { color: #f87171; }
+.log-entry .warn { color: #fbbf24; }
+
+.footer { text-align: center; padding: 24px; font-size: 12px; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>系统监控</h1>
+    <div class="refresh-info">上次刷新：<span id="lastUpdate">-</span></div>
+  </div>
+  <div class="header-right">
+    <div id="overallStatus" class="status-badge ok">
+      <span class="status-dot ok"></span>
+      <span>系统正常</span>
+    </div>
+    <button class="btn-refresh" onclick="refreshAll()">立即刷新</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Backend Instances -->
+  <div class="section-title">后端服务</div>
+  <div class="grid" id="backendGrid"></div>
+
+  <!-- Nginx -->
+  <div class="section-title">Nginx 负载均衡</div>
+  <div class="grid">
+    <div class="card" id="nginxCard">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Nginx</div>
+          <div class="card-subtitle">反向代理 + 负载均衡</div>
+        </div>
+        <span id="nginxBadge" class="status-badge ok"><span class="status-dot ok"></span>运行中</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">监听端口</span><span class="detail-value">:80</span></div>
+      <div class="detail-row"><span class="detail-label">负载均衡策略</span><span class="detail-value">least_conn</span></div>
+      <div class="detail-row"><span class="detail-label">故障转移</span><span class="detail-value">proxy_next_upstream</span></div>
+      <div class="detail-row"><span class="detail-label">响应时间</span><span class="detail-value" id="nginxLatency">-</span></div>
+    </div>
+
+    <!-- System Info -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">系统信息</div>
+          <div class="card-subtitle">运行环境</div>
+        </div>
+      </div>
+      <div class="detail-row"><span class="detail-label">后端端口</span><span class="detail-value">2010 / 2011 / 2012</span></div>
+      <div class="detail-row"><span class="detail-label">数据库</span><span class="detail-value">MySQL 8.0 :3306</span></div>
+      <div class="detail-row"><span class="detail-label">管理端</span><span class="detail-value">/admin/</span></div>
+      <div class="detail-row"><span class="detail-label">业主端</span><span class="detail-value">/client/</span></div>
+      <div class="detail-row"><span class="detail-label">健康检查</span><span class="detail-value">/actuator/health</span></div>
+    </div>
+  </div>
+
+  <!-- Health Check Details -->
+  <div class="section-title">Actuator 健康检查详情</div>
+  <div class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">健康状态</div>
+          <div class="card-subtitle">数据库连接 · 磁盘空间 · 应用心跳</div>
+        </div>
+      </div>
+      <div class="health-grid" id="healthGrid"></div>
+    </div>
+  </div>
+
+  <!-- Logs -->
+  <div class="section-title">最近检测日志</div>
+  <div class="card" style="grid-column: 1 / -1;">
+    <div class="log-box" id="logBox">
+      <div class="log-entry"><span class="time">[--:--:--]</span> 等待首次检测...</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">物业管理系统监控面板 · 自动刷新间隔 10 秒</div>
+
+<script>
+const BACKENDS = [
+  { name: 'Backend-1', port: 2010, color: '#34d399', healthPath: '/monitor/health/1/', metricsPath: '/monitor/metrics/1/' },
+  { name: 'Backend-2', port: 2011, color: '#60a5fa', healthPath: '/monitor/health/2/', metricsPath: '/monitor/metrics/2/' },
+  { name: 'Backend-3', port: 2012, color: '#a78bfa', healthPath: '/monitor/health/3/', metricsPath: '/monitor/metrics/3/' }
+];
+const REFRESH_INTERVAL = 10000;
+const logs = [];
+
+function now() { return new Date().toLocaleTimeString('zh-CN', { hour12: false }); }
+
+function addLog(msg, level = 'ok') {
+  logs.unshift({ time: now(), msg, level });
+  if (logs.length > 50) logs.pop();
+  renderLogs();
+}
+
+function renderLogs() {
+  const box = document.getElementById('logBox');
+  box.innerHTML = logs.map(l =>
+    `<div class="log-entry"><span class="time">[${l.time}]</span> <span class="${l.level}">${l.msg}</span></div>`
+  ).join('');
+}
+
+async function checkBackend(backend) {
+  const t0 = performance.now();
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    const res = await fetch(backend.healthPath, {
+      signal: ctrl.signal, cache: 'no-store'
+    });
+    clearTimeout(timer);
+    const latency = Math.round(performance.now() - t0);
+    const data = await res.json();
+    return { ok: true, data, latency, status: res.status };
+  } catch (e) {
+    return { ok: false, error: e.message, latency: Math.round(performance.now() - t0) };
+  }
+}
+
+async function fetchMetrics(backend) {
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    const res = await fetch(backend.metricsPath, { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(timer);
+    const data = await res.json();
+    const names = data.availableMetrics || [];
+    const result = {};
+
+    // Fetch specific metrics
+    const toFetch = [
+      'jvm.memory.used',
+      'jvm.memory.max',
+      'process.cpu.usage'
+    ].filter(n => names.includes(n));
+
+    for (const name of toFetch) {
+      const mr = await fetch(`/monitor/metrics/${BACKENDS.indexOf(backend) + 1}/${name}`, { cache: 'no-store' });
+      if (mr.ok) {
+        const md = await mr.json();
+        if (md.measurements?.length > 0) {
+          result[name] = md.measurements[0].value;
+        }
+      }
+    }
+    return result;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function checkNginx() {
+  const t0 = performance.now();
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    const res = await fetch('/admin/', { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(timer);
+    return { ok: res.ok, latency: Math.round(performance.now() - t0), status: res.status };
+  } catch (e) {
+    return { ok: false, error: e.message, latency: Math.round(performance.now() - t0) };
+  }
+}
+
+function renderBackendCard(backend, result, metrics) {
+  const statusClass = result.ok ? 'ok' : 'err';
+  const statusText = result.ok ? '运行中' : '离线';
+  const latencyClass = result.ok ? (result.latency > 1000 ? 'yellow' : 'green') : 'red';
+
+  let metricsHtml = '';
+  if (metrics) {
+    const cpuRaw = metrics['process.cpu.usage'] ?? 0;
+    const cpu = (cpuRaw * 100).toFixed(1);
+    const memUsed = metrics['jvm.memory.used'] ?? 0;
+    const memMax = metrics['jvm.memory.max'] ?? 0;
+    const memMB = (memUsed / 1048576).toFixed(0);
+    const memMaxMB = (memMax / 1048576).toFixed(0);
+    const memPct = memMax > 0 ? ((memUsed / memMax) * 100).toFixed(1) : 0;
+    const cpuColor = cpu > 80 ? '#f87171' : cpu > 50 ? '#fbbf24' : '#34d399';
+    const memColor = memPct > 80 ? '#f87171' : memPct > 50 ? '#fbbf24' : '#34d399';
+
+    metricsHtml = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+        <div>
+          <div class="metric-label">CPU 使用率</div>
+          <div class="metric-value" style="font-size:18px;color:${cpuColor}">${cpu}%</div>
+          <div class="chart-bar"><div class="chart-bar-fill" style="width:${Math.min(cpu, 100)}%;background:${cpuColor}"></div></div>
+        </div>
+        <div>
+          <div class="metric-label">JVM 内存</div>
+          <div class="metric-value" style="font-size:18px;color:${memColor}">${memMB} MB</div>
+          <div class="chart-bar"><div class="chart-bar-fill" style="width:${Math.min(memPct, 100)}%;background:${memColor}"></div></div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">${memPct}% of ${memMaxMB} MB</div>
+        </div>
+      </div>
+    `;
+  }
+
+  let details = '';
+  if (result.ok && result.data) {
+    const db = result.data.components?.db;
+    const disk = result.data.components?.diskSpace;
+    const ping = result.data.components?.ping;
+
+    details = `
+      <div class="detail-row"><span class="detail-label">整体状态</span><span class="detail-value" style="color:#34d399">${result.data.status}</span></div>
+      <div class="detail-row"><span class="detail-label">数据库</span><span class="detail-value" style="color:${db?.status === 'UP' ? '#34d399' : '#f87171'}">${db?.status || '-'}</span></div>
+      <div class="detail-row"><span class="detail-label">磁盘</span><span class="detail-value">${disk ? (disk.details.total / 1073741824).toFixed(0) + ' GB' : '-'}</span></div>
+      <div class="detail-row"><span class="detail-label">心跳</span><span class="detail-value" style="color:${ping?.status === 'UP' ? '#34d399' : '#f87171'}">${ping?.status || '-'}</span></div>
+    `;
+  } else {
+    details = `<div class="detail-row"><span class="detail-label">错误</span><span class="detail-value" style="color:#f87171">${result.error || '无法连接'}</span></div>`;
+  }
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${backend.name}</div>
+          <div class="card-subtitle">:${backend.port}</div>
+        </div>
+        <span class="status-badge ${statusClass}"><span class="status-dot ${statusClass}"></span>${statusText}</span>
+      </div>
+      <div class="metric">
+        <div class="metric-label">响应延迟</div>
+        <div class="metric-value ${latencyClass}">${result.ok ? result.latency + ' ms' : '-'}</div>
+        <div class="chart-bar"><div class="chart-bar-fill" style="width:${Math.min(result.latency / 20, 100)}%;background:${backend.color}"></div></div>
+      </div>
+      ${metricsHtml}
+      ${details}
+    </div>
+  `;
+}
+
+function renderHealthGrid(results) {
+  const grid = document.getElementById('healthGrid');
+  const items = [];
+
+  results.forEach((r, i) => {
+    if (!r.ok) {
+      items.push(`<div class="health-item"><div class="name">Backend-${i+1} DB</div><div class="status" style="color:#f87171">离线</div></div>`);
+      items.push(`<div class="health-item"><div class="name">Backend-${i+1} Disk</div><div class="status" style="color:#f87171">离线</div></div>`);
+      items.push(`<div class="health-item"><div class="name">Backend-${i+1} Ping</div><div class="status" style="color:#f87171">离线</div></div>`);
+      return;
+    }
+    const db = r.data?.components?.db;
+    const disk = r.data?.components?.diskSpace;
+    const ping = r.data?.components?.ping;
+
+    items.push(`<div class="health-item"><div class="name">Backend-${i+1} DB</div><div class="status" style="color:${db?.status === 'UP' ? '#34d399' : '#f87171'}">${db?.status || '-'}</div></div>`);
+    items.push(`<div class="health-item"><div class="name">Backend-${i+1} Disk</div><div class="status" style="color:${disk?.status === 'UP' ? '#34d399' : '#f87171'}">${disk?.status || '-'}</div></div>`);
+    items.push(`<div class="health-item"><div class="name">Backend-${i+1} Ping</div><div class="status" style="color:${ping?.status === 'UP' ? '#34d399' : '#f87171'}">${ping?.status || '-'}</div></div>`);
+  });
+
+  grid.innerHTML = items.join('');
+}
+
+function updateOverallStatus(allOk) {
+  const el = document.getElementById('overallStatus');
+  if (allOk) {
+    el.className = 'status-badge ok';
+    el.innerHTML = '<span class="status-dot ok"></span><span>系统正常</span>';
+  } else {
+    el.className = 'status-badge err';
+    el.innerHTML = '<span class="status-dot err"></span><span>部分异常</span>';
+  }
+}
+
+async function refreshAll() {
+  document.getElementById('lastUpdate').textContent = now();
+
+  const results = await Promise.all(BACKENDS.map(b => checkBackend(b)));
+  const metricsList = await Promise.all(
+    BACKENDS.map((b, i) => results[i].ok ? fetchMetrics(b) : null)
+  );
+  const nginxResult = await checkNginx();
+
+  // Render backend cards
+  const grid = document.getElementById('backendGrid');
+  grid.innerHTML = BACKENDS.map((b, i) => renderBackendCard(b, results[i], metricsList[i])).join('');
+
+  // Render health grid
+  renderHealthGrid(results);
+
+  // Nginx
+  const nginxBadge = document.getElementById('nginxBadge');
+  const nginxLatency = document.getElementById('nginxLatency');
+  if (nginxResult.ok) {
+    nginxBadge.className = 'status-badge ok';
+    nginxBadge.innerHTML = '<span class="status-dot ok"></span>运行中';
+    nginxLatency.textContent = nginxResult.latency + ' ms';
+    nginxLatency.style.color = '#34d399';
+  } else {
+    nginxBadge.className = 'status-badge err';
+    nginxBadge.innerHTML = '<span class="status-dot err"></span>离线';
+    nginxLatency.textContent = '-';
+    nginxLatency.style.color = '#f87171';
+  }
+
+  // Overall status
+  const allBackendOk = results.every(r => r.ok);
+  updateOverallStatus(allBackendOk && nginxResult.ok);
+
+  // Log
+  const upCount = results.filter(r => r.ok).length;
+  addLog(`检测完成：后端 ${upCount}/${BACKENDS.length} 在线，Nginx ${nginxResult.ok ? '正常' : '异常'}`,
+    (allBackendOk && nginxResult.ok) ? 'ok' : 'warn');
+}
+
+// Initial load
+refreshAll();
+setInterval(refreshAll, REFRESH_INTERVAL);
+</script>
+</body>
+</html>

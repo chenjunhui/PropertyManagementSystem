@@ -1,0 +1,15 @@
+FROM nginx:1.25-alpine
+
+LABEL maintainer="Property Management System"
+
+# Remove default config
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Static files will be mounted as volumes in docker-compose
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:80/admin/ || exit 1

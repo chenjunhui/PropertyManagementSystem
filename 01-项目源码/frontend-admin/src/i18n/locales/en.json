@@ -90,9 +90,9 @@
     "RECTIFY": "Rectify"
   },
   "unitStatus": {
-    "OCCUPIED": "Occupied",
-    "VACANT": "Vacant",
-    "DECORATING": "Renovating"
+    "0": "Renovating",
+    "1": "Occupied",
+    "2": "Vacant"
   },
   "role": {
     "ADMIN": "Admin",
@@ -255,5 +255,9 @@
     "detail": "Detail",
     "success": "Success",
     "fail": "Failed"
+  },
+  "network": {
+    "disconnected": "Network Disconnected",
+    "reconnecting": "Attempting to reconnect..."
   }
 }

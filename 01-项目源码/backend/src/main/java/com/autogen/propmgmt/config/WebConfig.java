@@ -41,6 +41,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true);
+        registry.addMapping("/actuator/**")
+                .allowedOrigins(corsOrigins.split(","))
+                .allowedMethods("*")
+                .allowedHeaders("*");
         registry.addMapping("/v3/api-docs/**")
                 .allowedOrigins("*")
                 .allowedMethods("*");

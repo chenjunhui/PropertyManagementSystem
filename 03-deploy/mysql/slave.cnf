@@ -1,0 +1,13 @@
+[mysqld]
+# Slave configuration for MySQL 8.0 replication
+server-id=2
+relay-log=relay-bin
+read-only=ON
+super-read-only=ON
+gtid-mode=ON
+enforce-gtid-consistency=ON
+relay-log-recovery=ON
+
+# Performance
+innodb-buffer-pool-size=512M
+max-connections=200

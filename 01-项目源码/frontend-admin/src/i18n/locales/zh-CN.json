@@ -258,5 +258,9 @@
     "detail": "详情",
     "success": "成功",
     "fail": "失败"
+  },
+  "network": {
+    "disconnected": "网络连接已断开",
+    "reconnecting": "正在尝试重新连接..."
   }
 }

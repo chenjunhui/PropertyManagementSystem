@@ -1,0 +1,14 @@
+[mysqld]
+# Master configuration for MySQL 8.0 replication
+server-id=1
+log-bin=mysql-bin
+binlog-format=ROW
+binlog-expire-logs-seconds=604800
+gtid-mode=ON
+enforce-gtid-consistency=ON
+sync-binlog=1
+innodb-flush-log-at-trx-commit=1
+
+# Performance
+innodb-buffer-pool-size=512M
+max-connections=200
